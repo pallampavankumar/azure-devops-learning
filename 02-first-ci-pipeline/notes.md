@@ -55,3 +55,54 @@ Example:
 - GitHub
 
 It is used by pipelines to deploy resources.
+
+# First CI/CD Pipeline (Build + Deploy)
+
+This project uses an Azure DevOps pipeline to:
+
+1. Pull code from GitHub
+2. Build the Spring Boot application
+3. Deploy the JAR to Azure App Service
+
+Pipeline flow:
+
+GitHub → Azure DevOps Pipeline → Azure App Service
+
+---
+
+## Pipeline structure
+
+The pipeline has two stages.
+
+### 1. Build Stage
+- Uses a Microsoft-hosted agent
+- Runs Maven:
+  
+  mvn clean package
+
+- Produces a JAR file
+- Publishes it as an artifact
+
+### 2. Deploy Stage
+- Downloads the built artifact
+- Uses the Azure service connection
+- Deploys the JAR to Azure App Service
+
+---
+
+## Key pipeline components
+
+### Trigger
+trigger:
+
+main
+
+Runs pipeline when code is pushed to the main branch.
+
+### Agent
+vmImage: ubuntu-latest
+
+A Linux machine provided by Azure to run the pipeline.
+
+### Service connection
+Used to allow Azure DevOps to deploy resources into the Azure subscription.
